@@ -1,0 +1,99 @@
+{% extends "auth_base.html" %} {% block title %} <title>Register</title> {%
+endblock title %} {%block style_block %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/register.css')}}" />
+{%endblock%} {% block content %}
+
+<div class="con">
+  <div class="welcome-section">
+    <div class="welcome-message">
+      <h1>Welcome to Technortal</h1>
+      <p>Your Best Learning Management Partner</p>
+    </div>
+  </div>
+  <div class="form-section">
+
+
+    <div class="form-container">
+      <h2>Register</h2>
+      <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div>
+          {% for category, message in messages %}
+          <p class="alert alert-{{ category }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+      </div>
+      <form method="POST" action="{{ url_for('main.auth.register') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.username.label(class="form-label") }}
+          {{ form.username(class="form-control") }}
+          {% if form.username.errors %}
+          <div class="text-danger">
+            {% for error in form.username.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control") }}
+          {% if form.email.errors %}
+          <div class="text-danger">
+            {% for error in form.email.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password.label(class="form-label") }}
+          {{ form.password(class="form-control") }}
+          {% if form.password.errors %}
+          <div class="text-danger">
+            {% for error in form.password.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.confirm_password.label(class="form-label") }}
+          {{ form.confirm_password(class="form-control") }}
+          {% if form.confirm_password.errors %}
+          <div class="text-danger">
+            {% for error in form.confirm_password.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.role.label(class="form-label") }}
+          {{ form.role(class="form-control") }}
+          {% if form.role.errors %}
+          <div class="text-danger">
+            {% for error in form.role.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+      </form>
+
+      <a href="{{ url_for('main.auth.login') }}">Already have an account? Login here.</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

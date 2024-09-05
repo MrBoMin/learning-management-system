@@ -1,0 +1,55 @@
+body {
+font-family: 'JetBrains Mono', monospace;
+background-color: #f7f7f7;
+color: #333;
+}
+.navbar {
+background-color: #333;
+color: #fff;
+}
+.navbar-brand {
+font-weight: bold;
+font-size: 1.5rem;
+}
+.btn-custom {
+background-color: #333;
+color: #fff;
+border: none;
+font-weight: bold;
+}
+.btn-custom:hover {
+background-color: #555;
+}
+.card {
+background-color: #e0e0e0;
+border: none;
+}
+.card-title {
+font-weight: bold;
+}
+.container {
+padding-top: 50px;
+}
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-container {
+    height: 200px; /* Adjust this height as needed */
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* This will make the image cover the container without distortion */
+}
+
+.card-body {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+
+

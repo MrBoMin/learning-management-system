@@ -1,0 +1,80 @@
+body {
+  font-family: "JetBrains Mono", monospace;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.navbar {
+  background-color: #333;
+}
+
+.navbar .navbar-brand, .navbar .nav-link {
+  color: #fff;
+}
+
+.navbar .navbar-brand:hover, .navbar .nav-link:hover {
+  color: #ccc;
+}
+
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #000;
+  font-weight: 500;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-control {
+  background-color: #eaeaea;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #333;
+}
+
+.form-control:focus {
+  background-color: #fff;
+  border-color: #555;
+  box-shadow: none;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #000;
+}
+
+.btn-primary {
+  background-color: #333;
+  border-color: #333;
+  color: #fff;
+  font-weight: 500;
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #000;
+  border-color: #000;
+}
+
+.text-danger {
+  color: #ff4d4d;
+}
+
+.card {
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Monochrome theme styling for form elements */
+input[type="file"] {
+  padding: 5px;
+}

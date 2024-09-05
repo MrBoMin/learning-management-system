@@ -1,0 +1,51 @@
+body {
+  font-family: "JetBrains Mono", monospace;
+}
+.con {
+  display: flex;
+  min-height: 100vh;
+  gap: 48px;
+}
+.welcome-section {
+  flex: 1;
+  background-color: #555;
+  background-size: cover;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+form {
+  margin-bottom: 32px;
+}
+.btn-custom {
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+.btn-custom:hover {
+  background-color: #555;
+}
+.welcome-message {
+  color: #fff;
+  margin-bottom: 24px;
+}
+.welcome-text {
+  columns: #eee;
+}
