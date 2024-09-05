@@ -44,3 +44,5 @@ class ClassroomForm(FlaskForm):
     class_code = StringField('Class Code', validators=[DataRequired(), Length(min=6, max=10)])  # Class code field
     photo = FileField('Classroom Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])  # Image upload field
     submit = SubmitField('Create Classroom')
+
+

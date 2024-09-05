@@ -46,6 +46,22 @@ def create_class():
 
 
 
-# @classroom.route('/join', methods = ['POST','GET'] )
+@classroom.route('/delete_class/<int:id>',methods=['POST'])
+@login_required
+def delete_class(id):
+    if current_user.role != 'teacher':
+        flash('Only teachers can delete classrooms.')
+        return redirect(url_for('main.classroom.index'))
+
+    classroom = Classroom.query.filter_by(id=id,teacher_id=current_user.id).first() 
+
+    if not classroom:
+        flash('Classroom not found!')
+        return redirect(url_for('main.classroom.index'))
+    
+    db.session.delete(classroom)
+    db.session.commit()
+    flash('Classroom deleted successfully!', 'success')
+    return redirect(url_for('main.classroom.index'))
 
 
