@@ -26,7 +26,7 @@
 
     </div>
     <div class="row">
-        {% if clasrooms | length == 0 %}
+        {% if classrooms | length == 0 %}
         {% if current_user.role == 'teacher' %}
         <p class="alert alert-info">You did not create any classrooms. Press on Create Class.</p>
         {% else %}
@@ -37,8 +37,9 @@
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
                 <div class="card-image-container">
+                   <a  href="{{url_for('main.classroom.view_class',id = classroom.id)}}" >
                     <img class="card-img-top" src="{{ url_for('static', filename='uploads/' + classroom.photo_url) }}"
-                        alt="Classroom Image">
+                        alt="Classroom Image"></a>
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title"> {{ classroom.title }} </h5>

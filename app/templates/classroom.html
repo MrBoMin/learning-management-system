@@ -1,152 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technortal Course Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        body {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: #f7f7f7;
-            color: #333;
-        }
-        .navbar {
-            background-color: #333;
-            color: #fff;
-        }
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        .btn-custom {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            margin-right: 10px;
-        }
-        .btn-custom:hover {
-            background-color: #555;
-        }
-        .chapter{
-            margin-bottom: 48px;
-        }
-        .chapter-header {
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .chapter-buttons {
-            margin-bottom: 20px;
-        }
-        .chapter-buttons .btn {
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        .list-group-item {
-            font-weight: bold;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-        }
-        .list-group-item i {
-            margin-right: 10px;
-        }
-        .list-group-item a {
-            text-decoration: none;
-            color: #333;
-            display: inline-block;
-            flex-grow: 1;
-        }
-        .list-group-item a:hover {
-            background-color: #ddd;
-            color: #000;
-            border-radius: 5px;
-        }
-        .create-chapter-btn {
-            float: right;
-        }
-        .announ{
-            margin-bottom: 24px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="./home.html">Technortal</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% block title %}
+<title>{{ classroom.title }}</title>
+{% endblock %}
 
-    <!-- Banner Image -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="banner" style="background-color: #ddd; height: 300px; margin-top: 20px;">
-                    <!-- Placeholder for the banner image -->
-                </div>
+{% block style_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/classroom.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Banner Image -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="banner" style="background-color: #ddd; height: 300px; margin-top: 20px; position: relative;">
+                <!-- Placeholder for the banner image -->
+                <img src="{{ url_for('static', filename='uploads/' + classroom.photo_url) }}" alt="Classroom Image"
+                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Course Content -->
-    <div class="container mt-4">
-        <p class="announ">Class announcement - မနက်ဖြန်အတန်းပိတ်ပါသည်။ </p>
-        <div class="chapter">
-            <h5 class="chapter-header">CHAPTER 0 : COURSE INTRODUCTION</h5>
-            <div class="chapter-buttons">
-                <button class="btn btn-custom btn-sm">Add Materials +</button>
-                <button class="btn btn-custom btn-sm">Add Quizzes +</button>
-                <button class="btn btn-custom btn-sm">Add Assignment +</button>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                    <a href="./material.html">Learning Outcomes And Objectives</a>
-                </li>
-                <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                    <a href="#">How To Succeed In This Course?</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="chapter">
-            <h5 class="chapter-header">CHAPTER 1 : ABOUT VARIABLES AND DATATYPES</h5>
-            <div class="chapter-buttons">
-                <button class="btn btn-custom btn-sm">Add Materials +</button>
-                <button class="btn btn-custom btn-sm">Add Quizzes +</button>
-                <button class="btn btn-custom btn-sm">Add Assignment +</button>
-            </div>
-            <ul class="list-group">
-                <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                    <a href="#">1.0 What Is a Variable?</a>
-                </li>
-                <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                    <a href="./quiz.html">1.1 What Are Datatypes?</a>
-                </li>
-                                <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                    <a href="./assignment.html">1.2 Assignment</a>
-                </li>
-            </ul>
-        </div>
-
-        <button class="btn btn-custom btn-sm create-chapter-btn">Create Chapter +</button>
+<!-- Course Content -->
+<div class="container mt-4">
+    <div class="mb-5">
+        <h2>About Class</h2>
+        <p class="announ">{{ classroom.description }}</p>
     </div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <!-- Loop through the chapters dynamically -->
+    {% for chapter in chapters %}
+    <div class="chapter">
+        <h5 class="chapter-header">{{ loop.index }} : {{ chapter.title }}</h5>
+        <div class="chapter-buttons">
+            <button class="btn btn-custom btn-sm">Add Materials +</button>
+            <button class="btn btn-custom btn-sm">Add Quizzes +</button>
+            <button class="btn btn-custom btn-sm">Add Assignment +</button>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><i class="fas fa-file-alt"></i>
+                <a href="#">View Chapter Details</a>
+            </li>
+            <!-- Add more links or details as needed -->
+        </ul>
+    </div>
+    {% endfor %}
+
+    <!-- Form to create a new chapter -->
+    <form method="POST" action="{{ url_for('main.classroom.add_chapter', id=classroom.id) }}">
+        <button type="submit" class="btn btn-custom btn-sm create-chapter-btn mb-5">Create Chapter +</button>
+    </form>
+</div>
+{% endblock %}

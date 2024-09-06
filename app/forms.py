@@ -46,3 +46,7 @@ class ClassroomForm(FlaskForm):
     submit = SubmitField('Create Classroom')
 
 
+class ChapterForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(max=100)])
+    description = TextAreaField('Description', validators=[Length(max=500)])  # Optional field
+    submit = SubmitField('Create Chapter')

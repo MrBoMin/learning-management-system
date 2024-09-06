@@ -11,7 +11,6 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     role = db.Column(db.String(30), nullable=False)
     
-    # Use meaningful and unique backref names
     classrooms = db.relationship('Classroom', backref='teacher', lazy=True, cascade='all, delete-orphan')
     assignments = db.relationship('Assignment', backref='assigned_student', lazy=True, cascade='all, delete-orphan')
     submissions = db.relationship('Submission', backref='student_submission', lazy=True, cascade='all, delete-orphan')
@@ -25,27 +24,36 @@ class Classroom(db.Model):
     photo_url = db.Column(db.String(200))
     class_code = db.Column(db.String(10), unique=True, nullable=False)
     
-    # Ensure cascading delete-orphan for related assignments and materials
-    assignments = db.relationship('Assignment', back_populates='classroom', cascade='all, delete-orphan')    
-    materials = db.relationship('Material', backref='classroom', lazy=True, cascade='all, delete-orphan')
+    chapters = db.relationship('Chapter', backref='classroom', lazy=True, cascade='all, delete-orphan')
+
+class Chapter(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    classroom_id = db.Column(db.Integer, db.ForeignKey('classroom.id', ondelete='CASCADE'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Relationships with Assignment and Material
+    assignments = db.relationship('Assignment', back_populates='chapter', cascade='all, delete-orphan')
+    materials = db.relationship('Material', backref='chapter', lazy=True, cascade='all, delete-orphan')
 
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    classroom_id = db.Column(db.Integer, db.ForeignKey('classroom.id', ondelete='CASCADE'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=True)  # Corrected foreign key to reference 'user.id'
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id', ondelete='CASCADE'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=True)
     due_date = db.Column(db.DateTime, nullable=True)
     file_url = db.Column(db.String(200), nullable=True)
 
-    classroom = db.relationship('Classroom', back_populates='assignments')
+    chapter = db.relationship('Chapter', back_populates='assignments')
     student = db.relationship('User', backref='student_assignments')
 
 class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text)
-    classroom_id = db.Column(db.Integer, db.ForeignKey('classroom.id', ondelete='CASCADE'), nullable=False)  # Ensure cascading delete on classroom delete
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id', ondelete='CASCADE'), nullable=False)
     file_url = db.Column(db.String(200))
 
 class Submission(db.Model):

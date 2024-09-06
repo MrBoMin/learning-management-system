@@ -1,8 +1,8 @@
 from flask import Blueprint,render_template,redirect,url_for,flash,request
 from flask_login import login_user,logout_user,login_required,current_user
-from app.models import User,Classroom;
+from app.models import User,Classroom,Chapter;
 from app import db
-from app.forms import LoginForm,ClassroomForm
+from app.forms import LoginForm,ClassroomForm,ChapterForm
 from app.utils import save_image, generate_class_code,delete_file
 import os
 
@@ -70,17 +70,37 @@ def delete_class(id):
 
 
 
-@classroom.route('/classrooms/<int:id>')
+@classroom.route('/classrooms/<int:id>', methods=['GET'])
 @login_required
 def view_class(id):
-    classroom = Classroom.query.filter_by(id = id).first()
-
-    if not classroom:
-        flash('Classroom not found!')
-        return redirect(url_for('main.classroom.index'))
+    # Query the classroom by ID
+    classroom = Classroom.query.get_or_404(id)
     
-    return render_template('classroom.html') 
+    # Query the chapters associated with the classroom
+    chapters = Chapter.query.filter_by(classroom_id=id).all()
+
+    # Render the template and pass the classroom and chapters to it
+    return render_template('classroom.html', classroom=classroom, chapters=chapters)
 
 
 
 
+@classroom.route('/classrooms/<int:id>/add-chapter', methods=['GET', 'POST'])
+@login_required
+def add_chapter(id):
+    form = ChapterForm()
+    classroom = Classroom.query.get_or_404(id)
+    
+    if form.validate_on_submit():
+        # Create a new Chapter instance
+        new_chapter = Chapter(
+            title=form.title.data,
+            description=form.description.data,
+            classroom_id=id
+        )
+        db.session.add(new_chapter)
+        db.session.commit()
+        flash('New chapter added successfully!', 'success')
+        return redirect(url_for('main.classroom.view_class', id=id))
+    
+    return render_template('create_chapter.html', form=form, classroom=classroom)
