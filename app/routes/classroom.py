@@ -3,7 +3,8 @@ from flask_login import login_user,logout_user,login_required,current_user
 from app.models import User,Classroom;
 from app import db
 from app.forms import LoginForm,ClassroomForm
-from app.utils import save_image, generate_class_code
+from app.utils import save_image, generate_class_code,delete_file
+import os
 
 
 classroom = Blueprint('classroom',__name__)
@@ -24,16 +25,15 @@ def create_class():
         return redirect(url_for('main.classroom.index'))
 
     form = ClassroomForm()
-
     if form.validate_on_submit():
         filename = None
         if form.photo.data:
-            filename = save_image(form.photo.data)  
+            filename = save_image(form.photo.data, 'classroom_images')  
         
         classroom = Classroom(
             title=form.title.data,
             description=form.description.data,
-            class_code=form.class_code.data,
+            class_code=generate_class_code(),
             teacher_id=current_user.id,
             photo_url=filename  
         )
@@ -59,9 +59,28 @@ def delete_class(id):
         flash('Classroom not found!')
         return redirect(url_for('main.classroom.index'))
     
+
+    if classroom.photo_url:
+        delete_file(os.path.join(classroom.photo_url))
+    
     db.session.delete(classroom)
     db.session.commit()
     flash('Classroom deleted successfully!', 'success')
     return redirect(url_for('main.classroom.index'))
+
+
+
+@classroom.route('/classrooms/<int:id>')
+@login_required
+def view_class(id):
+    classroom = Classroom.query.filter_by(id = id).first()
+
+    if not classroom:
+        flash('Classroom not found!')
+        return redirect(url_for('main.classroom.index'))
+    
+    return render_template('classroom.html') 
+
+
 
 

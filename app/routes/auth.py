@@ -62,3 +62,6 @@ def register():
                 flash('An unexpected error occurred. Please try again.', 'danger')
 
     return render_template('register.html', form=form)
+
+
+

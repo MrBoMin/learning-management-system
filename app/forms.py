@@ -41,7 +41,7 @@ class RegistrationForm(FlaskForm):
 class ClassroomForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=1, max=100)])
     description = TextAreaField('Description', validators=[Length(max=500)])  # Optional description
-    class_code = StringField('Class Code', validators=[DataRequired(), Length(min=6, max=10)])  # Class code field
+    #class_code = StringField('Class Code', validators=[DataRequired(), Length(min=6, max=10)])  # Class code field
     photo = FileField('Classroom Image', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])  # Image upload field
     submit = SubmitField('Create Classroom')
 

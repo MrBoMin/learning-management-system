@@ -26,6 +26,13 @@
 
     </div>
     <div class="row">
+        {% if clasrooms | length == 0 %}
+        {% if current_user.role == 'teacher' %}
+        <p class="alert alert-info">You did not create any classrooms. Press on Create Class.</p>
+        {% else %}
+        <p class="alert alert-info">You did not join any classrooms. Press on Join Class.</p>
+        {% endif %}
+        {% else %}
         {% for classroom in classrooms %}
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
@@ -37,11 +44,12 @@
                     <h5 class="card-title"> {{ classroom.title }} </h5>
                     <p class="card-text">by {{ classroom.teacher.username }}</p>
                     <p class="card-text">classcode : {{ classroom.class_code }}</p>
-                    <a href="./classroom.html" class="btn btn-custom">View Class</a>
+                    <a href="{{url_for('main.classroom.view_class',id = classroom.id)}}" class="btn btn-custom">View
+                        Class</a>
 
                     {% if current_user.role == 'teacher' %}
-                    <form action="{{ url_for('main.classroom.delete_class', id=classroom.id) }}"
-                        method="post" style="display: inline;">
+                    <form action="{{ url_for('main.classroom.delete_class', id=classroom.id) }}" method="post"
+                        style="display: inline;">
                         <button type="submit" class="btn btn-danger"
                             onclick="return confirm('Are you sure you want to delete this classroom?');">
                             <i class="fa-solid fa-trash"></i>
@@ -52,6 +60,9 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
+
+
     </div>
 </div>
 
