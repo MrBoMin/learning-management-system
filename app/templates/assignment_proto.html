@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .navbar {
+            background-color: #333;
+            color: #fff;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .content-container {
+            padding-top: 50px;
+        }
+        .section {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn-edit {
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: bold;
+            border: none;
+            margin-bottom: 20px;
+        }
+        .btn-edit:hover {
+            background-color: #c0c0c0;
+        }
+        .attachments {
+            margin-top: 20px;
+        }
+        .attachments h5 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #d0d0d0;
+            margin-bottom: 10px;
+        }
+        .attachment-item i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .upload-section {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #d0d0d0;
+            margin-bottom: 20px;
+        }
+        .upload-section h5 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .btn-upload {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+        .btn-upload:hover {
+            background-color: #555;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .table thead th {
+            background-color: #333;
+            color: white;
+        }
+        .table tbody td a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .table tbody td a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="./home.html">Technortal</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container content-container">
+        <!-- Assignment Instructions Section -->
+        <div class="section">
+            <h2><i class="fas fa-tasks"></i> Assignment Instructions</h2>
+            <!-- Edit button (visible only to teachers) -->
+            <button class="btn btn-edit"><i class="fas fa-pencil-alt"></i> Edit Assignment</button>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+        </div>
+
+        <!-- Attachments Section -->
+        <div class="section attachments">
+            <h5><i class="fas fa-paperclip"></i> Attachment Files</h5>
+            <div class="attachment-item">
+                <i class="fas fa-file-pdf"></i>
+                <a href="#" download="Assignment_Instructions.pdf">Assignment_Instructions.pdf</a>
+            </div>
+        </div>
+
+        <!-- Student Upload Section -->
+        <div class="section upload-section">
+            <h5><i class="fas fa-upload"></i> Upload Your Assignment</h5>
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="file" class="form-control-file" name="assignmentUpload" id="assignmentUpload" required>
+                </div>
+                <button type="submit" class="btn btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload Assignment</button>
+            </form>
+        </div>
+
+        <!-- Uploaded Assignments Table (Visible to Teachers) -->
+        <div class="section table-container mt-5">
+            <h5><i class="fas fa-list"></i> Uploaded Assignments</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Uploaded File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Rows -->
+                    <tr>
+                        <td>1</td>
+                        <td>123456</td>
+                        <td>John Doe</td>
+                        <td><a href="#">JohnDoe_Assignment.pdf</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>789012</td>
+                        <td>Jane Smith</td>
+                        <td><a href="#">JaneSmith_Assignment.pdf</a></td>
+                    </tr>
+                    <!-- Add more rows as necessary -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

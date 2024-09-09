@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+<title> {{ material.title }} </title>
+{% endblock title %}
+
+{% block style_block %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/material.css')}}">
+<style>
+    .formatted-content {
+        white-space: pre-wrap;
+        /* Preserves both whitespace and wraps text to the next line */
+    }
+</style>
+{% endblock style_block %}
+
+{% block content %}
+<div class="container content-container">
+    <div class="content">
+        <h1>{{ material.title }}</h1>
+        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+
+        <div class="formatted-content">{{ material.content }}</div>
+
+        <ul>
+            {% for objective in material.objectives %}
+            <li>{{ objective }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="attachments">
+        <h5>Attachment Files</h5>
+        {% if material.file_url %}
+        <div class="attachment-item">
+            <i class="fas fa-file-pdf"></i>
+            <a href="{{ url_for('static', filename='uploads/' + material.file_url) }}" target="_blank">{{
+                material.title }}</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <a class="btn btn-next-lesson mt-5"
+        href="{{ url_for('main.classroom.view_class', id=material.chapter.classroom_id) }}">
+        <i class="fas fa-arrow-right"></i> Back to Classroom
+    </a>
+</div>
+{% endblock content %}

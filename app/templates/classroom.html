@@ -9,12 +9,10 @@
 {% endblock %}
 
 {% block content %}
-<!-- Banner Image -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="banner" style="background-color: #ddd; height: 300px; margin-top: 20px; position: relative;">
-                <!-- Placeholder for the banner image -->
                 <img src="{{ url_for('static', filename='uploads/' + classroom.photo_url) }}" alt="Classroom Image"
                     style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
             </div>
@@ -22,27 +20,69 @@
     </div>
 </div>
 
-<!-- Course Content -->
 <div class="container mt-4">
     <div class="mb-5">
         <h2>About Class</h2>
         <p class="announ">{{ classroom.description }}</p>
     </div>
 
-    <!-- Loop through the chapters dynamically -->
-    {% for chapter in chapters %}
-    <div class="chapter">
-        <h5 class="chapter-header">{{ loop.index }} : {{ chapter.title }}</h5>
-        <div class="chapter-buttons">
-            <button class="btn btn-custom btn-sm">Add Materials +</button>
-            <button class="btn btn-custom btn-sm">Add Quizzes +</button>
-            <button class="btn btn-custom btn-sm">Add Assignment +</button>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div>
+            {% for category, message in messages %}
+            {% if category == 'message' %}
+            <p class="alert alert-info custom-login-message">{{ message }}</p>
+            {% else %}
+            <p class="alert alert-{{ category }}">{{ message }}</p>
+            {% endif %}
+            {% endfor %}
         </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Loop through the chapters dynamically -->
+    {% for item in chapters %}
+    <div class="chapter mb-4">
+        <h5 class="chapter-header">{{ loop.index }} : {{ item.chapter.title }}</h5>
+        <div class="chapter-buttons mb-3">
+            <a href="{{ url_for('main.classroom.add_material', classroom_id=classroom.id, chapter_id=item.chapter.id) }}"
+                class="btn btn-custom btn-sm">Add Materials +</a>
+            <a href="{{ url_for('main.classroom.add_assignment', classroom_id=classroom.id, chapter_id=item.chapter.id) }}"
+                class="btn btn-custom btn-sm">Add Assignment +</a>
+        </div>
+
+        <!-- Display materials -->
         <ul class="list-group">
-            <li class="list-group-item"><i class="fas fa-file-alt"></i>
-                <a href="#">View Chapter Details</a>
+            {% if item.materials %}
+            {% for material in item.materials %}
+            <li class="list-group-item">
+                <i class="fas fa-file-alt"></i>
+                <a href="{{ url_for('main.classroom.view_material', material_id=material.id) }}">
+                    {{ material.title }}
+                </a>
             </li>
-            <!-- Add more links or details as needed -->
+            {% endfor %}
+            {% else %}
+            <li class="list-group-item">No materials added yet.</li>
+            {% endif %}
+        </ul>
+
+        <!-- Display assignments -->
+        <ul class="list-group mt-3">
+            {% if item.assignments %}
+            {% for assignment in item.assignments %}
+            <li class="list-group-item">
+                <i class="fas fa-tasks"></i>
+                <a href="{{ url_for('main.classroom.view_assignment', assignment_id=assignment.id) }}">
+                    {{ assignment.title }}
+                </a>
+            </li>
+            {% endfor %}
+            {% else %}
+            <li class="list-group-item">No assignments added yet.</li>
+            {% endif %}
         </ul>
     </div>
     {% endfor %}

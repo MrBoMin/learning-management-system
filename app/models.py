@@ -42,12 +42,13 @@ class Assignment(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id', ondelete='CASCADE'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)  # Add teacher_id to reference the creator
     due_date = db.Column(db.DateTime, nullable=True)
     file_url = db.Column(db.String(200), nullable=True)
 
     chapter = db.relationship('Chapter', back_populates='assignments')
-    student = db.relationship('User', backref='student_assignments')
+    teacher = db.relationship('User', backref='teacher_assignments')  # Reference the User who created the assignment
+
 
 class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)

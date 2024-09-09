@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField,TextAreaField
-from wtforms.validators import DataRequired,Email, Length, EqualTo
-from wtforms import SelectField,StringField, PasswordField, SubmitField,FileField
+from wtforms import StringField, PasswordField, SubmitField,TextAreaField,SelectField,FileField,DateTimeField,DateField
+from wtforms.validators import DataRequired,Email, Length, EqualTo, Optional
 from flask_wtf.file import FileAllowed, FileRequired
 
 
@@ -50,3 +49,18 @@ class ChapterForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=100)])
     description = TextAreaField('Description', validators=[Length(max=500)])  # Optional field
     submit = SubmitField('Create Chapter')
+
+
+class MaterialForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content')
+    file = FileField('File')
+    submit = SubmitField('Add Material') 
+
+
+class AssignmentForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[Optional()])
+    due_date = DateField('Due Date', format='%Y-%m-%d', validators=[Optional()])
+    file = FileField('Upload File', validators=[Optional()])
+    submit = SubmitField('Create Assignment')
