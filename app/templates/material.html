@@ -17,7 +17,11 @@
 <div class="container content-container">
     <div class="content">
         <h1>{{ material.title }}</h1>
-        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+        {% if current_user.role == 'teacher' %}
+        <a href="{{ url_for('main.classroom.edit_material', classroom_id=classroom.id, chapter_id=chapter.id, material_id=material.id) }}"
+            class="btn btn-edit"><i class="fas fa-edit"></i> Edit</a>
+        {% endif %}
+
 
         <div class="formatted-content">{{ material.content }}</div>
 

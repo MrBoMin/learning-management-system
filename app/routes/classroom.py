@@ -16,6 +16,11 @@ def index():
     classrooms = Classroom.query.filter_by(teacher_id=current_user.id).all()
     return render_template('index.html', classrooms=classrooms)
 
+@classroom.route('/classrooms')
+@login_required
+def show_classrooms():
+    return redirect(url_for('main.classroom.index'))
+
 
 @classroom.route('/create-class', methods=['GET', 'POST'])
 @login_required
@@ -139,7 +144,10 @@ def add_material(classroom_id,chapter_id):
 @login_required
 def view_material(material_id):
     material = Material.query.get_or_404(material_id)
-    return render_template('material.html', material=material) 
+    chapter = Chapter.query.get_or_404(material.chapter_id)
+    classroom = Classroom.query.get_or_404(chapter.classroom_id)
+    
+    return render_template('material.html', material=material, chapter=chapter, classroom=classroom)
 
 
 @classroom.route('/classrooms/<int:classroom_id>/chapter/<int:chapter_id>/add-assignment', methods=['GET', 'POST'])
@@ -178,3 +186,81 @@ def add_assignment(classroom_id, chapter_id):
 def view_assignment(assignment_id):
     assignment = Assignment.query.get_or_404(assignment_id)
     return render_template('assignment.html', assignment=assignment) 
+
+
+
+@classroom.route('/classrooms/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_class(id):
+    classroom = Classroom.query.get_or_404(id)
+
+    if current_user.role != 'teacher' or classroom.teacher_id != current_user.id:
+        flash('Only the teacher can edit this classroom.', 'warning')
+        return redirect(url_for('main.classroom.view_class', id=id))
+
+    form = ClassroomForm(obj=classroom)
+
+    if form.validate_on_submit():
+        if form.photo.data:
+            if classroom.photo_url:
+                delete_file(os.path.join(classroom.photo_url)) 
+            classroom.photo_url = save_image(form.photo.data, 'classroom_images')
+
+        classroom.title = form.title.data
+        classroom.description = form.description.data
+        db.session.commit()
+        flash('Classroom updated successfully!', 'success')
+        return redirect(url_for('main.classroom.view_class', id=id))
+
+    return render_template('edit_class.html', form=form, classroom=classroom)
+
+
+
+@classroom.route('/classrooms/<int:classroom_id>/chapter/<int:chapter_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_chapter(classroom_id, chapter_id):
+    chapter = Chapter.query.get_or_404(chapter_id)
+
+    if current_user.role != 'teacher':
+        flash('Only teachers can edit this chapter.', 'warning')
+        return redirect(url_for('main.classroom.view_class', id=classroom_id))
+
+    form = ChapterForm(obj=chapter)
+
+    if form.validate_on_submit():
+        chapter.title = form.title.data
+        chapter.description = form.description.data
+        db.session.commit()
+        flash('Chapter updated successfully!', 'success')
+        return redirect(url_for('main.classroom.view_class', id=classroom_id))
+
+    return render_template('edit_chapter.html', form=form, chapter=chapter)
+
+
+@classroom.route('/classrooms/<int:classroom_id>/chapter/<int:chapter_id>/material/<int:material_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_material(classroom_id, chapter_id, material_id):
+    material = Material.query.get_or_404(material_id)
+    chapter = Chapter.query.get_or_404(chapter_id)
+    classroom = Classroom.query.get_or_404(classroom_id)
+
+    if current_user.role != 'teacher':
+        flash('Only teachers can edit this material.', 'warning')
+        return redirect(url_for('main.classroom.view_class', id=classroom_id))
+
+    form = MaterialForm(obj=material)
+
+    if form.validate_on_submit():
+        if form.file.data:
+            if material.file_url:
+                delete_file(os.path.join(material.file_url))  
+            material.file_url = save_image(form.file.data, 'materials')
+
+        material.title = form.title.data
+        material.content = form.content.data
+        db.session.commit()
+        flash('Material updated successfully!', 'success')
+        return redirect(url_for('main.classroom.view_class', id=classroom_id))
+
+    return render_template('edit_material.html', form=form, material=material, chapter=chapter, classroom=classroom)
+

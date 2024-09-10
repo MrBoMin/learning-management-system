@@ -78,3 +78,7 @@ body {
   top: 0;
   left: 0;
 }
+
+.formatted-content {
+  white-space: pre-wrap;
+}
